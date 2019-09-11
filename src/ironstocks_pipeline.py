@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np  # Librería para cálculos númericos optimizados. 
 import pandas as pd # Librería para manejo de estructuras de datos.
 
@@ -20,6 +21,10 @@ register_matplotlib_converters()
 available_stocks = pd.read_csv('../data/available_stocks.csv')
 
 # Peticiones a la API Alpha Vantage.
+
+#Cargamos el token para el API
+tokenA = open("../tokenA.txt", "r").read()
+
 def request_dataA(stock,freq = 'Daily',period = 100):
     """
     stock: Nombre del intrumento listado en algún exchange americano. Conocido como Ticker o Symbol.
@@ -27,7 +32,7 @@ def request_dataA(stock,freq = 'Daily',period = 100):
           no se solicitan intradaía. Default: 'Daily'
     period: Cantidad de datos que se solicitan. Default: 100
     """
-    if stock not in available_stocks:
+    if stock not in available_stocks['Stock'].tolist():
         print('El stock "',stock,'" no se encuentra disponible, se sustituira por un stock aleatorio')
         stock = available_stocks.iloc[random.randint(0, len(available_stocks))]
         print('Ahora tenemos el stock',stock)
